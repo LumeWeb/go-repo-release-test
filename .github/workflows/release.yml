@@ -32,11 +32,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global init.defaultBranch ${{ github.ref_name }}
-          if [ ! -f ".version" ]; then
+          if [ ! -f "package.json" ]; then
+            echo $json > package.json
+            sed -i "s/{VERSION}/$(cat .version)/g" package.json
             touch .gitignore
-            if ! grep -q "package.json" .gitignore; then
-              echo "package.json" >> .gitignore
-            fi
             if ! grep -q "node_modules" .gitignore; then
               echo "node_modules" >> .gitignore
             fi
@@ -44,14 +43,11 @@ jobs:
               echo "pnpm-lock.yaml" >> .gitignore
             fi
             echo "$initialVersion" > .version
-            git add .version .gitignore
+            git add package.json .version .gitignore
             git commit -m "chore: versioning setup"
             git push
           fi
-          echo $json > package.json
-          sed -i "s/{VERSION}/$(cat .version)/g" package.json
-          cat package.json
-          echo "VERSION=$(cat .version)" >> $GITHUB_OUTPUT
+          echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
         with:
