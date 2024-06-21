@@ -1,1 +1,6 @@
-{"name":"@LumeWeb/go-repo-release-test","private":true,"version":"v0.11.0","packageManager":"pnpm@8.8.0"}
+{
+  "name": "@LumeWeb/go-repo-release-test",
+  "private": true,
+  "version": "0.12.0",
+  "packageManager": "pnpm@8.8.0"
+}
