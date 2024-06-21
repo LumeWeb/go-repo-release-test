@@ -60,6 +60,15 @@ jobs:
         uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update Version
+        if: steps.changesets.outputs.pullRequestNumber
+        run: |
+          version=$(gq .version package.json)
+          git checkout changeset-release/${{ github.ref_name }}
+          echo $version > .version
+          git add .version
+          git commit --amend --no-edit
+          git push --force
       - name: Create Tag
         if: steps.changesets.outputs.pullRequestNumber == ''
         run: |
