@@ -1,5 +1,11 @@
 # @LumeWeb/go-repo-release-test
 
+## 0.6.0
+
+### Minor Changes
+
+- d2dede2: g
+
 ## 0.5.0
 
 ### Minor Changes
