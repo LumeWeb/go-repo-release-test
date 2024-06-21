@@ -43,13 +43,12 @@ jobs:
         with:
           node-version: 20.x
       - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
       - name: Install Dependencies
         run: |
           pnpm add @changesets/cli
-      - run: |
-          ls $PWD/node_modules/.bin
+      - name: Setup Node Path
+        run: |
+          echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
       - uses: pnpm/action-setup@v4
       - name: Create Release Pull Request or Publish
         id: changesets
