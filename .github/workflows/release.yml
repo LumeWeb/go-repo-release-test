@@ -50,6 +50,7 @@ jobs:
         run: |
           echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
       - uses: pnpm/action-setup@v4
+      - uses: lhotari/action-upterm@v1
       - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@v1
