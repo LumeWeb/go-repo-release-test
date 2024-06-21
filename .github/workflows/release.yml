@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+    paths:
+      - '.changeset/**'
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@4
+      - name: Check Version
+        id: check_version
+        run: |
+          json="{\"name\":\"@${{ github.repository }}\",\"private\":true,\"version\":\"0.0.0\",\"devDependencies\":{\"@changesets/cli\":\"^2.27.1\"},\"packageManager\":\"pnpm@8.8.0\"}"
+          if [ ! -f ".version" ]; then
+            echo "$json" > package.json
+            jq -r .version package.json > .version
+            git add .version
+            git commit -m "chore: versioning setup"
+            git push
+          fi
+          cat .version > "$GITHUB_OUTPUT"
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Install Dependencies
+        run: |
+          pnpm install
+      - uses: pnpm/action-setup@v4
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "chore: release"
+          publish: "changeset tag && git push origin --tags"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
