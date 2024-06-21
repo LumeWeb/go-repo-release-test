@@ -49,6 +49,7 @@ jobs:
       - name: Setup Node Path
         run: |
           echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
+      - uses: lhotari/action-upterm@v1
       - uses: pnpm/action-setup@v4
       - name: Create Release Pull Request or Publish
         id: changesets
