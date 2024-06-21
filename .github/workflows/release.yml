@@ -76,6 +76,8 @@ jobs:
           if [ -z "$version" ] || [ "$version" == "0.0.0" ]; then
             exit 0
           fi
+          echo $(ls-remote --tags origin)
+          echo $(ls-remote --tags origin | grep v${version})
           if [ ! "$(ls-remote --tags origin | grep v${version})"  ]; then
             git tag "v${version}"
             git push origin "v${version}"
