@@ -63,7 +63,7 @@ jobs:
       - name: Update Version
         if: steps.changesets.outputs.pullRequestNumber
         run: |
-          version=$(gq .version package.json)
+          version=$(jq .version package.json)
           git checkout changeset-release/${{ github.ref_name }}
           echo $version > .version
           git add .version
