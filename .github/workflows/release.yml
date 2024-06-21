@@ -19,18 +19,20 @@ jobs:
       - name: Check Version
         id: check_version
         run: |
-          json="{\"name\":\"@${{ github.repository }}\",\"private\":true,\"version\":\"0.0.0\",\"devDependencies\":{\"@changesets/cli\":\"^2.27.1\"},\"packageManager\":\"pnpm@8.8.0\"}"
+          json="{\"name\":\"@${{ github.repository }}\",\"private\":true,\"version\":\"{VERSION}\",\"devDependencies\":{\"@changesets/cli\":\"^2.27.1\"},\"packageManager\":\"pnpm@8.8.0\"}"
+          initialVersion="0.0.0"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ ! -f ".version" ]; then
-            echo "$json" > package.json
             touch .gitignore
             echo "package.json" >> .gitignore
-            jq -r .version package.json > .version
+            echo "$initialVersion" > .version
             git add .version .gitignore
             git commit -m "chore: versioning setup"
             git push
           fi
+          echo $json > package.json
+          sed -i "s/{VERSION}/$(cat .version)/g" package.json
           echo "VERSION=$(cat .version)" >> $GITHUB_ENV
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
