@@ -61,7 +61,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Tag
-        if: steps.changesets.outputs.pullRequestNumber
+        if: ! steps.changesets.outputs.pullRequestNumber
         run: |
-          changeset tag
-          git push origin --tags
+          version=$(cat .version)
+          if [ -z "$version" ] || [ "$version" == "0.0.0" ]; then
+            exit 0
+          fi
+          if [ ! "$(git tag -l "v${version}")"  ]; then
+            git tag "v${version}"
+            git push origin "v${version}"
+          fi
