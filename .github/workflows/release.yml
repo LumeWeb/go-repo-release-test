@@ -22,6 +22,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: LumeWeb/golang-versioner-action@debug-gh-token
+      - uses: LumeWeb/golang-versioner-action
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
