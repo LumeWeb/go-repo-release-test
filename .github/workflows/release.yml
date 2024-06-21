@@ -103,4 +103,4 @@ jobs:
           tag_name: "v${{ steps.changesets.outputs.version }}"
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
