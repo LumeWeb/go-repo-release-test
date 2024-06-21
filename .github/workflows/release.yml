@@ -16,8 +16,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Check Version
-        id: check_version
+      - name: Versioner Setup
+        id: versioner
         run: |
           json="{\"name\":\"@${{ github.repository }}\",\"private\":true,\"version\":\"{VERSION}\",\"packageManager\":\"pnpm@8.8.0\"}"
           initialVersion="0.0.0"
@@ -49,13 +49,14 @@ jobs:
       - name: Setup Node Path
         run: |
           echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
-      - uses: lhotari/action-upterm@v1
       - uses: pnpm/action-setup@v4
-      - name: Create Release Pull Request or Publish
+      - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@v1
-        with:
-          commit: "chore: release"
-          publish: "changeset tag && git push origin --tags"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Tag
+        if: steps.changesets.outputs.pullRequestNumber
+        run: |
+          changeset tag
+          git push origin --tags
