@@ -64,6 +64,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         if: github.event_name == 'push'
       - name: Install Dependencies
+        if: github.event_name == 'push'
         run: |
           pnpm add @changesets/cli
       - name: Setup Node Path
