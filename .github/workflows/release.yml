@@ -48,6 +48,8 @@ jobs:
       - name: Install Dependencies
         run: |
           pnpm add @changesets/cli
+      - run: |
+          which changeset
       - uses: pnpm/action-setup@v4
       - name: Create Release Pull Request or Publish
         id: changesets
