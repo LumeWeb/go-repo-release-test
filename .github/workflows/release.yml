@@ -49,7 +49,7 @@ jobs:
         run: |
           pnpm add @changesets/cli
       - run: |
-          ls /home/runner/setup-pnpm/node_modules/.bin
+          ls $PWD/node_modules/.bin
       - uses: pnpm/action-setup@v4
       - name: Create Release Pull Request or Publish
         id: changesets
