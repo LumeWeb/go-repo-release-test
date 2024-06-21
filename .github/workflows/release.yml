@@ -22,4 +22,4 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: LumeWeb/golang-versioner-action@v0.1
+      - uses: LumeWeb/golang-versioner-action@v0.1.0
