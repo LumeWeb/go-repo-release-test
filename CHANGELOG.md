@@ -1,5 +1,11 @@
 # @LumeWeb/go-repo-release-test
 
+## 0.11.0
+
+### Minor Changes
+
+- ecd4fdf: g
+
 ## 0.10.0
 
 ### Minor Changes
