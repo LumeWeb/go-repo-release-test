@@ -1,5 +1,5 @@
 ---
-"test": minor
+"@LumeWeb/go-repo-release-test": minor
 ---
 
 g
