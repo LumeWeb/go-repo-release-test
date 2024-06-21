@@ -35,8 +35,8 @@ jobs:
             git push
           fi
           echo $json > package.json
-          cat package.json
           sed -i "s/{VERSION}/$(cat .version)/g" package.json
+          cat package.json
           echo "VERSION=$(cat .version)" >> $GITHUB_ENV
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
