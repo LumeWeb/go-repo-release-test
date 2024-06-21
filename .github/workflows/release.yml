@@ -24,8 +24,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ ! -f ".version" ]; then
             echo "$json" > package.json
+            touch .gitignore
+            echo "package.json" >> .gitignore
             jq -r .version package.json > .version
-            git add .version
+            git add .version .gitignore
             git commit -m "chore: versioning setup"
             git push
           fi
