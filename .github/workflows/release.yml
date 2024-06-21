@@ -25,6 +25,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ ! -f ".version" ]; then
             touch .gitignore
+            if ! grep -q "package.json" .gitignore; then
+              echo "package.json" >> .gitignore
+            fi
             echo "package.json" >> .gitignore
             echo "$initialVersion" > .version
             git add .version .gitignore
