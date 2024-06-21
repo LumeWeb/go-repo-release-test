@@ -1,5 +1,11 @@
 # @LumeWeb/go-repo-release-test
 
+## 0.10.0
+
+### Minor Changes
+
+- 362fdb3: g
+
 ## 0.9.0
 
 ### Minor Changes
