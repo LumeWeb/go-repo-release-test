@@ -31,7 +31,6 @@ jobs:
             if ! grep -q "node_modules" .gitignore; then
               echo "node_modules" >> .gitignore
             fi
-            echo "package.json" >> .gitignore
             echo "$initialVersion" > .version
             git add .version .gitignore
             git commit -m "chore: versioning setup"
