@@ -66,15 +66,6 @@ jobs:
         uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update Version
-        if: github.event_name == 'push' && steps.changesets.outputs.pullRequestNumber
-        run: |
-          version=$(jq -r .version package.json)
-          git checkout changeset-release/${{ github.ref_name }}
-          echo $version > .version
-          git add .version
-          git commit --amend --no-edit
-          git push --force --set-upstream origin changeset-release/${{ github.ref_name }}
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'changeset-release/')
