@@ -31,6 +31,9 @@ jobs:
             if ! grep -q "node_modules" .gitignore; then
               echo "node_modules" >> .gitignore
             fi
+            if ! grep -q "pnpm-lock.yaml" .gitignore; then
+              echo "pnpm-lock.yaml" >> .gitignore
+            fi
             echo "$initialVersion" > .version
             git add .version .gitignore
             git commit -m "chore: versioning setup"
