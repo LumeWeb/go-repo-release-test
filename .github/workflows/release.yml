@@ -80,3 +80,13 @@ jobs:
             git tag "v${version}"
             git push origin "v${version}"
           fi
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          body_path: CHANGELOG.md
+          generate_release_notes: true
+          make_latest: true
+          # note you'll typically need to create a personal access token
+          # with permissions to create releases in the other repo
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
