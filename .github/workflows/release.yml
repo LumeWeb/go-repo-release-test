@@ -40,8 +40,7 @@ jobs:
             if ! grep -q "pnpm-lock.yaml" .gitignore; then
               echo "pnpm-lock.yaml" >> .gitignore
             fi
-            echo "$initialVersion" > .version
-            git add package.json .version .gitignore
+            git add package.json .gitignore
             git commit -m "chore: versioning setup"
             git push
           fi
