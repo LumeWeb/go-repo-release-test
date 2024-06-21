@@ -51,7 +51,7 @@ jobs:
           echo $json > package.json
           sed -i "s/{VERSION}/$(cat .version)/g" package.json
           cat package.json
-          echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+          echo "VERSION=$(cat .version)" >> $GITHUB_OUTPUT
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
         with:
@@ -82,22 +82,10 @@ jobs:
           git add .version
           git commit --amend --no-edit
           git push --force --set-upstream origin changeset-release/${{ github.ref_name }}
-      - name: Create Tag
-        if: github.event_name == 'push' && steps.changesets.outputs.pullRequestNumber == ''
-        run: |
-          version=$(cat .version)
-          if [ -z "$version" ] || [ "$version" == "0.0.0" ]; then
-            exit 0
-          fi
-          if [ ! "$(git ls-remote --tags origin | grep v${version})"  ]; then
-            git tag "v${version}"
-            git push origin "v${version}"
-          fi
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'changeset-release/')
         with:
-          body_path: CHANGELOG.md
           generate_release_notes: true
           make_latest: true
           tag_name: "v${{ steps.changesets.outputs.version }}"
