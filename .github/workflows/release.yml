@@ -68,7 +68,7 @@ jobs:
           echo $version > .version
           git add .version
           git commit --amend --no-edit
-          git push --force
+          git push --force --set-upstream origin changeset-release/${{ github.ref_name }}
       - name: Create Tag
         if: steps.changesets.outputs.pullRequestNumber == ''
         run: |
